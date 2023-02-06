@@ -1,7 +1,5 @@
 import os
 import sys
-import psutil
-import subprocess
 
 if len(sys.argv) != 2:
     print("Usage: python script.py subdirectory")
@@ -13,7 +11,14 @@ if not os.path.isdir(directory):
     print(f"{directory} is not a valid directory")
     sys.exit()
 
+# Replace forward slashes with backslashes (if any)
+directory = directory.replace('/', '\\')
+
+# Get a list of all the file names in the directory
 files = os.listdir(directory)
+
+# Filter the list of file names to only include files that end with "MP4"
+files = [file for file in files if file.endswith(".MP4")]
 
 # Sort the list of file names by the timestamp of their creation
 files.sort(key=lambda x: os.path.getctime(os.path.join(directory, x)))
